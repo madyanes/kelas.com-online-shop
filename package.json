@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/madyanes/kelas.com-online-shop/issues"
   },
-  "homepage": "https://github.com/madyanes/kelas.com-online-shop#readme"
+  "homepage": "https://github.com/madyanes/kelas.com-online-shop#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
