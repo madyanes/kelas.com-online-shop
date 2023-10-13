@@ -9,6 +9,13 @@ Teknologi beserta versi yang digunakan ketika proyek ini dikembangkan:
 - Node.js (v18.16.0)
 - MySQL (v8.0.34)
 
+## Environment Variables
+
+Sebelum menjalankan proyek ini, terlebih dulu sesuaikan nilai-nilai dari _environment variable_ sesuai preferensi:
+
+1. Duplikat berkas `.env.sample`, dengan nama `.env`.
+2. Sesuaikan nilai-nilai di dalamnya.
+
 ## Menjalankan di Komputer Lokal
 
 1. Klon proyek ini.
@@ -18,10 +25,12 @@ Teknologi beserta versi yang digunakan ketika proyek ini dikembangkan:
    npm install
    ```
 
-3. Jalankan server dengan perintah:
+3. [Sesuaikan konfigurasi _environment variable_ yang dibutuhkan.](#environment-variables)
+
+4. Jalankan server dengan perintah:
 
    ```shell
    npm run dev
    ```
 
-4. Untuk menghentikan server, ketik kombinasi tombol `ctrl` dan `c`.
+5. Untuk menghentikan server, ketik kombinasi tombol `ctrl` dan `c`.
