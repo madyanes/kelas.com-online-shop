@@ -36,4 +36,17 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-export { getUsers, createUser, deleteUser };
+const updateUser = async (req, res, next) => {
+  try {
+    const { id, email, password } = req.body;
+    const [result] = await userRepo.updateUser(id, email, password);
+    if (result.affectedRows === 0)
+      throw new Error(`User with ID ${id} is not found`);
+    successResponse(res, 'User updated successfully', result);
+  } catch (error) {
+    errorResponse(res, error.message || 'User update failed', 400);
+    next(error);
+  }
+};
+
+export { getUsers, createUser, deleteUser, updateUser };

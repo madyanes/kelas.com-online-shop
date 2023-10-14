@@ -13,8 +13,10 @@ app.use(logger());
 
 app.get('/', (req, res) => res.send('Madyan Eka Septian'));
 
+/** API endpoints for the shop owner */
 app.get('/users', usersService.getUsers);
 app.post('/users', usersService.createUser);
 app.delete('/users', usersService.deleteUser);
+app.put('/users', usersService.updateUser);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

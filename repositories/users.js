@@ -17,4 +17,10 @@ const deleteUser = async (id) => {
   return dbPool.query(query, values);
 };
 
-export { getUsers, createUser, deleteUser };
+const updateUser = async (id, email, password) => {
+  const query = `UPDATE Users SET email = ?, password = ? WHERE id = ?`;
+  const values = [email, password, id];
+  return dbPool.query(query, values);
+};
+
+export { getUsers, createUser, deleteUser, updateUser };
