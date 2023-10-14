@@ -23,4 +23,17 @@ const createUser = async (req, res, next) => {
   }
 };
 
-export { getUsers, createUser };
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const [result] = await userRepo.deleteUser(id);
+    if (result.affectedRows === 0)
+      throw new Error(`User with ID ${id} is not found`);
+    successResponse(res, 'User deleted successfully', result);
+  } catch (error) {
+    errorResponse(res, error.message || 'User deletion failed', 401);
+    next(error);
+  }
+};
+
+export { getUsers, createUser, deleteUser };

@@ -11,4 +11,10 @@ const createUser = async (email, password) => {
   return dbPool.query(query, values);
 };
 
-export { getUsers, createUser };
+const deleteUser = async (id) => {
+  const query = `DELETE FROM Users WHERE id = ?`;
+  const values = [id];
+  return dbPool.query(query, values);
+};
+
+export { getUsers, createUser, deleteUser };

@@ -15,5 +15,6 @@ app.get('/', (req, res) => res.send('Madyan Eka Septian'));
 
 app.get('/users', usersService.getUsers);
 app.post('/users', usersService.createUser);
+app.delete('/users', usersService.deleteUser);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
