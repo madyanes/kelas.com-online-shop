@@ -1,11 +1,14 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import logger from 'pino-http';
 import * as usersService from './services/users.js';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.API_PORT || 3000;
+
+app.use(logger());
 
 app.get('/', (req, res) => res.send('Madyan Eka Septian'));
 
