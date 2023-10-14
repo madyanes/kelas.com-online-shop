@@ -8,10 +8,12 @@ dotenv.config();
 const app = express();
 const port = process.env.API_PORT || 3000;
 
+app.use(express.json());
 app.use(logger());
 
 app.get('/', (req, res) => res.send('Madyan Eka Septian'));
 
 app.get('/users', usersService.getUsers);
+app.post('/users', usersService.createUser);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

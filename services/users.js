@@ -5,4 +5,10 @@ const getUsers = async (req, res) => {
   res.json(users);
 };
 
-export { getUsers };
+const createUser = async (req, res) => {
+  const { email, password } = req.body;
+  const [result] = await userRepo.createUser(email, password);
+  res.json(result);
+};
+
+export { getUsers, createUser };

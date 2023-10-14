@@ -5,4 +5,10 @@ const getUsers = async () => {
   return dbPool.query(query);
 };
 
-export { getUsers };
+const createUser = async (email, password) => {
+  const query = `INSERT INTO Users (email, password) VALUES (?, ?)`;
+  const values = [email, password];
+  return dbPool.query(query, values);
+};
+
+export { getUsers, createUser };
