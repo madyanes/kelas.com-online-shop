@@ -16,6 +16,11 @@ Sebelum menjalankan proyek ini, terlebih dulu sesuaikan nilai-nilai dari _enviro
 1. Duplikat berkas `.env.sample`, dengan nama `.env`.
 2. Sesuaikan nilai-nilai di dalamnya.
 
+## Siapkan Basis Data
+
+1. Sediakan basis data dengan nama yang sesuai dengan variabel `DB_NAME` di berkas `.env`.
+2. Jalankan kueri di dalam berkas `init.sql` untuk membuat tabel-tabel yang diperlukan.
+
 ## Menjalankan di Komputer Lokal
 
 1. Klon proyek ini.
