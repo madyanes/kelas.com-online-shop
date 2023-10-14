@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import * as userRepo from '../repositories/users.js';
 import { successResponse, errorResponse } from '../utils/response.js';
 
@@ -14,9 +15,11 @@ const getUsers = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const [result] = await userRepo.createUser(email, password);
-    const payload = { id: result.insertId, email };
-    successResponse(res, 'User created successfully', payload, 201);
+    bcrypt.hash(password, 10, async (error, hashedPassword) => {
+      const [result] = await userRepo.createUser(email, hashedPassword);
+      const payload = { id: result.insertId, email };
+      successResponse(res, 'User created successfully', payload, 201);
+    });
   } catch (error) {
     errorResponse(res, 'User creation failed', 409);
     next(error);
@@ -39,10 +42,12 @@ const deleteUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id, email, password } = req.body;
-    const [result] = await userRepo.updateUser(id, email, password);
-    if (result.affectedRows === 0)
-      throw new Error(`User with ID ${id} is not found`);
-    successResponse(res, 'User updated successfully', result);
+    bcrypt.hash(password, 10, async (error, hashedPassword) => {
+      const [result] = await userRepo.updateUser(id, email, hashedPassword);
+      if (result.affectedRows === 0)
+        throw new Error(`User with ID ${id} is not found`);
+      successResponse(res, 'User updated successfully', result);
+    });
   } catch (error) {
     errorResponse(res, error.message || 'User update failed', 400);
     next(error);
