@@ -1,6 +1,6 @@
 # API Toko Daring
 
-API sederhana untuk transaksi jual beli toko daring.
+API sederhana untuk transaksi jual beli toko daring. [Pelajari lebih lanjut di sini.](./plans.md)
 
 ## Kebutuhan Sistem
 
