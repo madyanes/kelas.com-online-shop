@@ -117,6 +117,7 @@ const validateToken = (req, res, next) => {
         }
       );
     } else {
+      errorResponse(res, 'Authorization header is missing', 401);
     }
   } catch (error) {
     errorResponse(res, error.message || 'Invalid access token', 401);
