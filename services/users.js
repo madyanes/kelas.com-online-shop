@@ -74,31 +74,28 @@ const login = async (req, res, next) => {
     const [[user]] = await userRepo.getUserByEmail(email);
     if (user.length === 0) throw new Error('User not found');
 
-    const result = await new Promise((resolve, reject) => {
-      bcrypt.compare(password, user.password, async (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      });
+    bcrypt.compare(password, user.password, (error, result) => {
+      if (result) {
+        const payload = { id: user.id, email: user.email };
+        const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
+          expiresIn: '1h',
+        });
+        const refreshToken = jwt.sign(
+          payload,
+          process.env.SECRET_REFRESH_TOKEN,
+          {
+            expiresIn: '8h',
+          }
+        );
+        const token = { accessToken, refreshToken };
+        successResponse(res, 'User login successfully', token);
+      } else {
+        throw new Error('Incorrect password');
+      }
     });
-
-    if (!result) throw new Error('Incorrect password');
-
-    const payload = { id: user.id, email: user.email };
-    const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
-      expiresIn: '1h',
-    });
-    const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN, {
-      expiresIn: '8h',
-    });
-    const token = { accessToken, refreshToken };
-    successResponse(res, 'User login successfully', token);
   } catch (error) {
     errorResponse(res, error.message || 'User login failed', 401);
     next(error);
-    return;
   }
 };
 
