@@ -99,4 +99,29 @@ const login = async (req, res, next) => {
   }
 };
 
-export { getUsers, createUser, deleteUser, updateUser, login };
+const validateToken = (req, res, next) => {
+  try {
+    const bearerHeader = req.headers.authorization;
+    if (typeof bearerHeader !== 'undefined') {
+      const accessToken = bearerHeader.split(' ')[1];
+
+      if (!accessToken) throw new Error('Access token is required');
+
+      jwt.verify(
+        accessToken,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, claims) => {
+          if (error) throw new Error('Invalid access token');
+          req.claims = claims;
+          next();
+        }
+      );
+    } else {
+    }
+  } catch (error) {
+    errorResponse(res, error.message || 'Invalid access token', 401);
+    next(error);
+  }
+};
+
+export { getUsers, createUser, deleteUser, updateUser, login, validateToken };
