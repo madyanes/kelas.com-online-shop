@@ -68,29 +68,38 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-// const login = async (req, res, next) => {
-//   try {
-//     const { email, password } = req.body;
-//     const [user] = await userRepo.getUserByEmail(email);
-//     if (user.length === 0) throw new Error('User not found');
-//     bcrypt.compare(password, user.password, async (error, result) => {
-//       console.log(result);
-//       if (!result) throw new Error('Incorrect password');
-//     });
-//     const payload = { id: user.id, email: user.email };
-//     const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
-//       expiresIn: '1h',
-//     });
-//     const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN, {
-//       expiresIn: '8h',
-//     });
-//     const token = { accessToken, refreshToken };
-//     successResponse(res, 'User login successfully', token);
-//   } catch (error) {
-//     errorResponse(res, error.message || 'User login failed', 401);
-//     next(error);
-//     return;
-//   }
-// };
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const [[user]] = await userRepo.getUserByEmail(email);
+    if (user.length === 0) throw new Error('User not found');
 
-export { getUsers, createUser, deleteUser, updateUser };
+    const result = await new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, async (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    if (!result) throw new Error('Incorrect password');
+
+    const payload = { id: user.id, email: user.email };
+    const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
+      expiresIn: '1h',
+    });
+    const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN, {
+      expiresIn: '8h',
+    });
+    const token = { accessToken, refreshToken };
+    successResponse(res, 'User login successfully', token);
+  } catch (error) {
+    errorResponse(res, error.message || 'User login failed', 401);
+    next(error);
+    return;
+  }
+};
+
+export { getUsers, createUser, deleteUser, updateUser, login };

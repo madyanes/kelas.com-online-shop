@@ -23,4 +23,10 @@ const updateUser = async (id, email, password) => {
   return dbPool.query(query, values);
 };
 
-export { getUsers, createUser, deleteUser, updateUser };
+const getUserByEmail = (email) => {
+  const query = 'SELECT id, email, password FROM Users WHERE email = ?';
+  const values = [email];
+  return dbPool.query(query, values);
+};
+
+export { getUsers, createUser, deleteUser, updateUser, getUserByEmail };

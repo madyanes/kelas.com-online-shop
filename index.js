@@ -14,6 +14,9 @@ app.use(logger());
 
 app.get('/', (req, res) => res.send('Madyan Eka Septian'));
 
+/** API endpoints to authenticate user */
+app.post('/login', usersService.login);
+
 /** API endpoints for the shop owner */
 app.get('/users', usersService.getUsers);
 app.post('/users', usersService.createUser);
