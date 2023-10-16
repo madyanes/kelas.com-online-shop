@@ -2,6 +2,10 @@
 
 API sederhana untuk transaksi jual beli toko daring. [Pelajari lebih lanjut di sini.](./plans.md)
 
+**Catatan: Proyek ini belum selesai, atau sedang dalam tahap pengembangan. [Dokumentasi](./plans.md) sewaktu-waktu dapat berubah tanpa pemberitahuan terlebih dulu.**
+
+Ingin memberi masukan? Silakan kirimkan surel ke <madyanes.dev@gmail.com>.
+
 ## Kebutuhan Sistem
 
 Teknologi beserta versi yang digunakan ketika proyek ini dikembangkan:
