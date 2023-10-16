@@ -3,15 +3,17 @@ import { getCurrentDate } from '../utils/datetime.js';
 
 const createOrder = async (totalPrice, shippingAddress) => {
   const orderNumber = +new Date();
+  const paymentStatus = 'waiting for payment';
   const query = `INSERT INTO Orders (order_date, order_status, total_price, order_number, shipping_address, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())`;
   const values = [
     getCurrentDate(),
-    'pending',
+    paymentStatus,
     totalPrice,
     orderNumber.toString(),
     shippingAddress,
   ];
-  return dbPool.query(query, values);
+  const result = await dbPool.query(query, values);
+  return [result, orderNumber.toString(), paymentStatus];
 };
 
 const getTotalPrice = async (product_id, qty) => {

@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.API_PORT || 3000;
 
 app.use(express.json());
-app.use(logger());
+// app.use(logger());
 
 app.get('/', (req, res) =>
   res.send('This application is under development. Not ready for production.')

@@ -25,17 +25,19 @@ const makeOrder = async (req, res, next) => {
       productItems.push({ product_id, qty });
     }
 
-    const [{ insertId: orderId }] = await createOrder(
-      totalPrice,
-      shipping_address
-    );
+    const [{ insertId: orderId }, orderNumber, paymentStatus] =
+      await createOrder(totalPrice, shipping_address);
 
     for (const product of productItems) {
       const { product_id, qty } = product;
       await createCart(product_id, qty, orderId);
     }
 
-    successResponse(res, 'Order created successfully', 'result');
+    successResponse(res, 'Order created successfully', {
+      order_number: orderNumber,
+      total_price: totalPrice,
+      payment_status: paymentStatus,
+    });
   } catch (error) {
     errorResponse(res, 'Order creation failed', 500);
     next(error);
