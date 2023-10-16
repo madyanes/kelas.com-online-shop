@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
 
     bcrypt.compare(password, user.password, (error, result) => {
       if (result) {
-        const payload = { id: user.id, email: user.email };
+        const payload = { id: user.id, email: user.email, role: user.owner };
         const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
           expiresIn: '1h',
         });

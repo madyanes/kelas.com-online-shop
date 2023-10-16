@@ -5,6 +5,7 @@ CREATE TABLE Users(
   id INT AUTO_INCREMENT,
   email VARCHAR(50) UNIQUE,
   password VARCHAR(255),
+  role VARCHAR(20),
   CONSTRAINT pk_user PRIMARY KEY(id)
 );
 -- Membuat tabel Products
@@ -39,6 +40,13 @@ CREATE TABLE Carts (
   FOREIGN KEY (product_id) REFERENCES Products(product_id),
   FOREIGN KEY (order_id) REFERENCES Orders(order_id)
 );
+-- Memasukkan data pengguna
+INSERT INTO Users (email, password, role)
+VALUES (
+    'admin@domain.com',
+    '$2b$10$3KWuaTo16.DlLnT1/XAzg.oM8HLPtHi27l9MJtrgCuaYr8mLQnIsC',
+    'owner'
+  );
 -- Contoh data dalam tabel Products
 INSERT INTO Products (
     product_name,

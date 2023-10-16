@@ -24,7 +24,7 @@ const updateUser = async (id, email, password) => {
 };
 
 const getUserByEmail = (email) => {
-  const query = 'SELECT id, email, password FROM Users WHERE email = ?';
+  const query = 'SELECT id, email, role, password FROM Users WHERE email = ?';
   const values = [email];
   return dbPool.query(query, values);
 };
