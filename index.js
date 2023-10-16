@@ -3,6 +3,7 @@ import express from 'express';
 import logger from 'pino-http';
 import * as usersService from './services/users.js';
 import * as productsService from './services/products.js';
+import * as ordersService from './services/orders.js';
 
 dotenv.config();
 
@@ -22,6 +23,9 @@ app.get('/users', usersService.validateToken, usersService.getUsers);
 app.post('/users', usersService.createUser);
 app.delete('/users', usersService.deleteUser);
 app.put('/users', usersService.updateUser);
+
+/** API endpoint for making orders */
+app.post('/orders', ordersService.makeOrder);
 
 /** API endpoints for products */
 app.get('/products', productsService.getProducts);
